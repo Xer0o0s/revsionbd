@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}Modif User{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+	    <div class="row justify-content-center">
+			
+                    <div class="col-10 text-warning">
+                        <h1 class="text-center text-secondary mt-4 pt-4 display-1 fw-bold">Modif User</h1>
+                        
+                        {{form(form)}}
+                    </div>    
+	    		</div>
+			</div>
+{% endblock %}

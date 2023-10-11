@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}Liste user{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+	<h1 class="text-center text-dark pt-4 display-1 fw-bold"> Liste user</h1>
+
+
+		<div class="row justify-content-center">
+			<div class="col-12 bg-white p-4 m-0 text-primary">
+				<div class="table-responsive">
+					<table class="table table">
+						<thead>
+
+						</thead>
+						<tbody>
+							{% for user in user %}
+								<tr class="{{ cycle(['table-primary', 'table-secondary'], loop.index0) }}">
+									<td class="text-black">{{ user.nom | capitalize }}</td>
+                                    <td class="text-black">{{ user.prenom | capitalize }}</td>
+                                    <td class="text-black">{{ user.email | lower }}</td>
+                                    <td class="text-black">{{ user.cp | lower }}</td>
+                                    <td class="text-black">{{ user.ville | lower }}</td>
+                                    <td class="text-black"><a href="{{path('supp-user',{'id':user.id})}}" class="btn btn-outline-dark">supprimer</a></td>
+                                    <td class="text-black"><a href="{{path('modfuser',{'id':user.id})}}" class="btn btn-outline-dark">modifier</a></td>
+									{% if user.isVerified == 0 %}
+										<td class="text-black"><a href="{{path('verif-user',{'id':user.id})}}" class="btn btn-outline-dark">Vérifier</a></td>
+									{% else %}
+										<td><p>Vérifié</p></td>
+									{% endif %}
+										{% if "ROLE_ADMIN" in user.roles %}
+										<td><p class="text-center fw-bold border-bottom">vous êtes Admin</p></td>
+										<td class="text-black"><a href="{{path('devenir-modo',{'id':user.id})}}" class="btn btn-outline-info">devenir modo</a></td>
+
+										<td class="text-black"><a href="{{path('devenir-user',{'id':user.id})}}" class="btn btn-outline-success">devenir user</a></td>
+									{% elseif "ROLE_MOD" in user.roles %}
+										<td><p class="text-center fw-bold border-bottom">vous êtes Modo</p></td>
+										<td class="text-black"><a href="{{path('devenir-admin',{'id':user.id})}}" class="btn btn-outline-danger">devenir admin</a></td>
+										<td class="text-black"><a href="{{path('devenir-user',{'id':user.id})}}" class="btn btn-outline-success">devenir user</a></td>
+									{% else %}
+										<td><p class="text-center fw-bold border-bottom">vous êtes User</p></td>
+										<td class="text-black"><a href="{{path('devenir-modo',{'id':user.id})}}" class="btn btn-outline-info">devenir modo</a></td>
+										<td class="text-black"><a href="{{path('devenir-admin',{'id':user.id})}}" class="btn btn-outline-danger">devenir admin</a></td>
+									{% endif %}
+								</tr>
+							{% endfor %}{#<td class="text-black"><a href="{{path('devenir-user',{'id':user.id})}}" class="btn btn-outline-info">devenir user</a></td>#}
+							 
+						</tbody>
+					</table>	
+				</div>				
+				<div class="d-flex flex-row-reverse bd-highlight mt-3 ">
+			</div>
+		</div>
+	</div>
+{% endblock %}
